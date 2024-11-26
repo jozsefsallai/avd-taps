@@ -1,8 +1,11 @@
 from core import AVDTaps
 
 def main():
-    taps = AVDTaps()
-    taps.run()
+    try:
+        taps = AVDTaps()
+        taps.run()
+    except KeyboardInterrupt:
+        print('Goodbye!')
 
 if __name__ == '__main__':
     main()

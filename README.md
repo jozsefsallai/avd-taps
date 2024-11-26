@@ -9,7 +9,8 @@ Easily configure keybinds to send tap inputs to an Android Virtual Device (AVD).
 ## Prerequisites
 
 - [Python 3](https://www.python.org/downloads/)
-- [Android SDK](https://developer.android.com/studio/releases/platform-tools) (for `adb`)
+- [Android SDK](https://developer.android.com/studio/releases/platform-tools)
+  (for `adb`)
 
 ## Installation
 
@@ -51,11 +52,37 @@ python3 main.py
 - `window_title`: The title of the window that the keybinds will be sent to. No
   other window will be affected and the keybinds only be sent to the window if
   it's in focus.
-- `keybinds`: A dictionary containing the keybinds. The key of the dictionary is
-  the name of the key in all lowercase. The value is an array containing the
-  coordinates of the tap. You can find these coordinates by enabling the
-  "Pointer location" option in the "Developer options" menu of your Android
-  device. The coordinates are relative to the top-left corner of the screen.
+- `preset_name`: An optional name that will be displayed in the command line.
+- `keybinds`: A dictionary containing the keybinds. See the
+  [Keybind object](#keybind-object) section for more information.
+
+## Keybind object
+
+A Keybind object defines the coordinates and behavior of a keybind. The object
+contains the following fields:
+
+- `x`: The x-coordinate of the tap. This is always required.
+- `y`: The y-coordinate of the tap. This is always required.
+- `keybind_type`: The type of the keybind. Defaults to `single`. Possible values
+  are:
+  - `single`: Sends a single tap on the specified coordinates. Holding the key
+    will not repeat the tap.
+  - `hold`: Sends a tap on the specified coordinates and repeats the tap as long
+    as the key is held.
+  - `swipe`: Sends a swipe gesture from the specified coordinates. If you use
+    this type, you must also specify the `distance` and `angle` parameters.
+  - `swipe_hold`: Sends a swipe gesture from the specified coordinates and holds
+    the swipe as long as the key is held. If you use this type, you must also
+    specify the `distance` and `angle` parameters.
+- `distance`: The distance of the swipe gesture in pixels. Has no effect if the
+  `keybind_type` is not set to `swipe` or `swipe_hold`.
+- `angle`: The angle of the swipe gesture in degrees. Has no effect if the
+  `keybind_type` is not set to `swipe` or `swipe_hold`.
+- `ignore_modifiers`: Whether or not the input shouldn't be sent if any modifier
+  key is pressed. Defaults to `true`.
+
+> [!NOTE]
+> The script doesn't currently support simultaneous swipes.
 
 ## Notice
 
