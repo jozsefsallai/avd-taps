@@ -73,8 +73,9 @@ class AVDTaps:
         if k is None:
             return
 
-        if self._is_modifier_key(k) and k in self._busy_keys:
-            self._busy_keys.remove(k)
+        if self._is_modifier_key(k):
+            if k in self._busy_keys:
+                self._busy_keys.remove(k)
             return
 
         keybind = self.config.get_keybind(k)
